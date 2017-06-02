@@ -1,16 +1,28 @@
-﻿#include "Graph.h"
+﻿#include <map>
+#include <functional>
+
+#include "Commands.h"
 
 using namespace std;
 
+/*
+TODO:
+1. Алгоритм.
+2. Обработка ошибок.
+3. Комменты.
+*/
+
 int main(void)
 {
+	Graph graph1, graph2;
+
 	map<string, function<void()>> commands;
 	
 	commands["help"] = help;
 	commands["stop"] = stop;
-	commands["load"] = load;
-	commands["show"] = show;
-	commands["check"] = check;
+	commands["load"] = [&]() { load(graph1, graph2); };
+	commands["show"] = [&]() { show(graph1, graph2); };
+	commands["check"] = [&]() { check(graph1, graph2); };
 
 	string command;
 	while (true)
