@@ -50,8 +50,9 @@ inline bool check(Graph graph1, Graph graph2)
 	if (graph1.n == graph2.n)
 	{
 		int n = graph1.n;
-		int* adjacent_g1 = new int[n]; // наборы инцидентных рёбер для вершин 1 графа
-		int* adjacent_g2 = new int[n]; // наборы инцидентных рёбер для вершин 2 графа
+		int* adjacent_g1 = new int[n]; // наборы инцидентных рёбер для каждой вершины 1 графа
+		int* adjacent_g2 = new int[n]; // наборы инцидентных рёбер для каждой вершины 2 графа
+		int* adjacent = new int[n]; // количество вершим с определённым набором(количеством) инцедентных рёбер
 
 		for (int i = 0; i < n; i++)
 		{
@@ -83,6 +84,7 @@ inline bool check(Graph graph1, Graph graph2)
 
 		for (int i = 0; i < n; i++)
 		{
+			adjacent[adjacent_g1[i]]++;
 			if (adjacent_g1[i] != adjacent_g2[i])
 			{
 				cout << "not isomorphic" << endl;
