@@ -47,7 +47,6 @@ struct Graph
 inline bool check(Graph graph1, Graph graph2)
 {
 	//Здесь будет алгоритм
-	
 	if (graph1.n == graph2.n)
 	{
 		int n = graph1.n;
@@ -86,10 +85,13 @@ inline bool check(Graph graph1, Graph graph2)
 		{
 			if (adjacent_g1[i] != adjacent_g2[i])
 			{
+				cout << "not isomorphic" << endl;
 				return false;
 			}
 		}
+		cout << "perhaps isomorphic" << endl;
 		return true;
 	}
+	cout << "not isomorphic" << endl;
 	return false;
 }

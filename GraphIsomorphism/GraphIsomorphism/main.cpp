@@ -38,7 +38,7 @@ int main(void)
 		{
 			cout << "Unknown command: " << command << endl;
 		}
-		cout << endl;
+		cout << "........................." << endl;
 	}
 	return 0;
 }
