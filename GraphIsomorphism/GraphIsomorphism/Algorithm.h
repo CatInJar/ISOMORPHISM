@@ -1,7 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include <cstdlib> 
+#include <map>
+#include <vector>
 
 using namespace std;
 
@@ -96,4 +97,86 @@ inline bool check(Graph graph1, Graph graph2)
 	}
 	cout << "not isomorphic" << endl;
 	return false;
+}
+
+inline int countEdges(Graph graph)
+{
+	int count = 0;
+
+	for (int i = 0; i < graph.n; i++)
+	{
+		for (int j = 0; j < graph.n; j++)
+		{
+			if (graph.matrix[i][j] != 0)
+			{
+				count++;
+			}
+		}
+	}
+	
+	return count;
+}
+
+inline map<pair<int, int>, vector<int>> splitToGroups(Graph graph)
+{
+	map<pair<int, int>, vector<int>> groups;
+
+	for (int i = 0; i < graph.n; i++)
+	{
+		pair<int, int> vertex;
+
+		for (int j = 0; j < graph.n; j++)
+		{
+			if (graph.matrix[i][j] != 0)
+			{
+				vertex.first++;
+			}
+
+			if (graph.matrix[j][i] != 0)
+			{
+				vertex.second++;
+			}
+		}
+
+		groups[vertex].push_back(i);
+	}
+
+	return groups;
+}
+
+inline bool check1(Graph graph1, Graph graph2)
+{
+	// Равно ли количество вершин
+	if (graph1.n != graph2.n)
+	{
+		return false;
+	}
+
+	// Равно ли количество дуг
+	if (countEdges(graph1) != countEdges(graph2))
+	{
+		return false;
+	}
+
+	// Разбиваем граф на группы вершин по количеству исходящих и входящих дуг
+	// Проверять на изоморфизм нужно уже каждую группу в отдельности
+	auto groups1 = splitToGroups(graph1);
+	auto groups2 = splitToGroups(graph2);
+
+	// Сравнение двух групп
+	auto predicate = [](auto a, auto b)
+	{
+		return a.first == b.first && a.second.size() == b.second.size();
+	};
+
+	// Группы и количество вершин в каждой должны совпадать, иначе графы не изоморфны
+	if (groups1.size() != groups2.size() ||
+		!equal(groups1.begin(), groups1.end(), groups2.begin(), predicate))
+	{
+		return false;
+	}
+
+
+
+	return true;
 }
