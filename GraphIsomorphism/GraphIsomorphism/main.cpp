@@ -23,7 +23,7 @@ int main(void)
 	commands["stop"] = stop;
 	commands["load"] = [&]() { load(graph1, graph2); };
 	commands["show"] = [&]() { show(graph1, graph2); };
-	commands["check"] = [&]() { cout << (check1(graph1, graph2) ? "isomorphic" : "not isomorphic") << endl; };
+	commands["check"] = [&]() { cout << (check(graph1, graph2) ? "isomorphic" : "not isomorphic") << endl; };
 
 	string command;
 	while (true)
