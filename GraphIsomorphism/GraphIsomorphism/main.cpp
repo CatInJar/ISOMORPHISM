@@ -1,5 +1,6 @@
 ﻿#include <map>
 #include <functional>
+#include <iostream>
 
 #include "Commands.h"
 

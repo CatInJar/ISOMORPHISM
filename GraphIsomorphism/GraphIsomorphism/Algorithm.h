@@ -10,42 +10,48 @@ struct Graph
 {
 	int n = 0;
 	int** matrix = nullptr;
-
-	void clear()
-	{
-		if (matrix != nullptr)
-		{
-			for (int i = 0; i < n; i++)
-			{
-				delete[] matrix[i];
-			}
-			delete[] matrix;
-		}
-	}
-
-	void init()
-	{
-		matrix = new int*[n];
-		for (int i = 0; i < n; i++)
-		{
-			matrix[i] = new int[n];
-		}
-	}
-
-	void print()
-	{
-		for (int i = 0; i < n; i++)
-		{
-			for (int j = 0; j < n; j++)
-			{
-				cout << matrix[i][j] << " ";
-			}
-			cout << endl;
-		}
-	}
 };
 
-inline bool check(Graph graph1, Graph graph2)
+inline void clear(Graph& graph)
+{
+	if (graph.matrix != nullptr)
+	{
+		for (int i = 0; i < graph.n; i++)
+		{
+			delete[] graph.matrix[i];
+		}
+		delete[] graph.matrix;
+	}
+}
+
+inline void init(Graph& graph)
+{
+	graph.matrix = new int*[graph.n];
+	for (int i = 0; i < graph.n; i++)
+	{
+		graph.matrix[i] = new int[graph.n];
+	}
+}
+
+inline void print(const Graph& graph)
+{
+	if (graph.n == 0)
+	{
+		cout << "empty" << endl;
+		return;
+	}
+
+	for (int i = 0; i < graph.n; i++)
+	{
+		for (int j = 0; j < graph.n; j++)
+		{
+			cout << graph.matrix[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+inline bool check(const Graph& graph1, const Graph& graph2)
 {
 	//Здесь будет алгоритм
 	if (graph1.n == graph2.n) //проверка размеров
@@ -70,7 +76,7 @@ inline bool check(Graph graph1, Graph graph2)
 					adjacent_g2[i] ++;
 					adjacent_g2[j] ++;
 				}
-			}	
+			}
 			for (int t = i; t > 0; t--) // сортируем вершины по количеству инцидентных рёбер оба массива вершин: добавленную вершину ставим на место
 			{
 				if (adjacent_g1[t] > adjacent_g1[t - 1]) //меняем местами, если у предыдущей вершины больше рёбер (в массиве вершин 1 графа)
@@ -80,7 +86,7 @@ inline bool check(Graph graph1, Graph graph2)
 
 				if (adjacent_g2[t] > adjacent_g2[t - 1]) //меняем местами, если у предыдущей вершины больше рёбер (в массиве вершин 2 графа)
 				{
-					swap(adjacent_g2[t], adjacent_g2[t - 1]); 
+					swap(adjacent_g2[t], adjacent_g2[t - 1]);
 				}
 			}
 		}
@@ -101,7 +107,7 @@ inline bool check(Graph graph1, Graph graph2)
 	return false;
 }
 
-inline int countEdges(Graph graph)
+inline int countEdges(const Graph& graph)
 {
 	int count = 0;
 
@@ -115,11 +121,11 @@ inline int countEdges(Graph graph)
 			}
 		}
 	}
-	
+
 	return count;
 }
 
-inline map<pair<int, int>, vector<int>> splitToGroups(Graph graph)
+inline map<pair<int, int>, vector<int>> splitToGroups(const Graph& graph)
 {
 	map<pair<int, int>, vector<int>> groups;
 
@@ -146,7 +152,7 @@ inline map<pair<int, int>, vector<int>> splitToGroups(Graph graph)
 	return groups;
 }
 
-inline bool check1(Graph graph1, Graph graph2)
+inline bool check1(const Graph& graph1, const Graph& graph2)
 {
 	// Равно ли количество вершин
 	if (graph1.n != graph2.n)

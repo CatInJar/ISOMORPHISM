@@ -1,8 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include <string>
 #include <fstream>
+#include <string>
 
 #include "Algorithm.h"
 
@@ -21,13 +21,13 @@ inline void stop()
 	exit(0);
 }
 
-inline void loadGraph(Graph &graph, string filename)
+inline void loadGraph(Graph &graph, const string &filename)
 {
 	ifstream file(filename);
 
-	graph.clear();
+	clear(graph);
 	file >> graph.n;
-	graph.init();
+	init(graph);
 
 	for (int i = 0; i < graph.n; i++)
 	{
@@ -46,11 +46,11 @@ inline void load(Graph &graph1, Graph &graph2)
 	loadGraph(graph2, "graph2.txt");
 }
 
-inline void show(Graph graph1, Graph graph2)
+inline void show(const Graph &graph1, const Graph &graph2)
 {
 	cout << "First graph:" << endl;
-	graph1.print();
+	print(graph1);
 
 	cout << "Second graph:" << endl;
-	graph2.print();
+	print(graph2);
 }
