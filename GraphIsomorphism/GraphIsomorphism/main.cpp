@@ -1,6 +1,7 @@
 ﻿#include <map>
 #include <functional>
 #include <iostream>
+#include <ctime>
 
 #include "Commands.h"
 
@@ -32,8 +33,13 @@ int main(void)
 		
 		if (commands.find(command) != commands.end())
 		{
+			clock_t t1 = clock();
 			commands[command]();
-			
+			clock_t t2 = clock();
+			if (command == "check")
+			{
+				cout <<"time: "<< (t2 - t1 + .0) / CLOCKS_PER_SEC << endl;
+			}
 		}
 		else
 		{

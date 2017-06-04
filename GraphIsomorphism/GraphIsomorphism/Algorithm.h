@@ -5,6 +5,8 @@
 #include <vector>
 #include <numeric>
 #include <algorithm>
+#include <random>
+
 
 using namespace std;
 
@@ -100,14 +102,47 @@ inline map<pair<int, int>, vector<int>> splitToGroups(const Graph& graph)
 	return groups;
 }
 
+inline vector<int**> RandomIsomorphicMatrix(int n)
+{
+	vector<int**> randomIsomMatrix; 
+	
+	int** m1 = new int*[n];
+	int** m2 = new int*[n];
+
+	for (int i = 0; i < n; i++)
+	{
+		m1[i] = new int[n];
+		m2[i] = new int[n];
+	}	
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n ; j++)
+		{
+			m1[i][j] = m2[i][j] = rand() % 2;
+			if (i == j)
+			{
+				m1[i][j] = m2[i][j] = 0;
+			}
+		}
+	}
+
+	random_shuffle(m2, m2 + n);
+
+	randomIsomMatrix.push_back(m1);
+	randomIsomMatrix.push_back(m2);
+
+	return randomIsomMatrix;
+}
+
 // Сопоставляет переставленные вершины из второго графа к вершинам из первого
 inline bool matchVertices(const Graph& graph1, const Graph& graph2, 
 	const vector<int>& vertices, const vector<int>& permutation)
-{
+{	
 	for (int i = 0; i < permutation.size(); i++)
 	{
 		for (int j = 0; j < permutation.size(); j++)
-		{
+		{			
 			if (graph1.matrix[vertices[i]][vertices[j]] != graph2.matrix[permutation[i]][permutation[j]])
 			{
 				return false;
@@ -167,8 +202,7 @@ inline bool check(const Graph& graph1, const Graph& graph2)
 			{
 				isomorphicGroup = true;
 			}
-		}
-		while (next_permutation(permutation.begin(), permutation.end()));
+		} while (next_permutation(permutation.begin(), permutation.end()));
 
 		// Если хотя бы в одной группе не найден изоморфизм, то графы не изоморфны
 		if (isomorphicGroup == false)
@@ -179,3 +213,5 @@ inline bool check(const Graph& graph1, const Graph& graph2)
 
 	return true;
 }
+
+
