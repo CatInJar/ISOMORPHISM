@@ -101,8 +101,8 @@ inline map<pair<int, int>, vector<int>> splitToGroups(const Graph& graph)
 }
 
 // Сопоставляет переставленные вершины из второго графа к вершинам из первого
-inline bool matchVertices(Graph graph1, Graph graph2, 
-	vector<int> vertices, vector<int> permutation)
+inline bool matchVertices(const Graph& graph1, const Graph& graph2, 
+	const vector<int>& vertices, const vector<int>& permutation)
 {
 	for (int i = 0; i < permutation.size(); i++)
 	{
