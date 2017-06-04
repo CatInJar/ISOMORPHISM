@@ -3,6 +3,8 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <numeric>
+#include <algorithm>
 
 using namespace std;
 
@@ -51,6 +53,7 @@ inline void print(const Graph& graph)
 	}
 }
 
+// Считает количество ребер
 inline int countEdges(const Graph& graph)
 {
 	int count = 0;
@@ -69,6 +72,7 @@ inline int countEdges(const Graph& graph)
 	return count;
 }
 
+// Разбивает графы на группы вершин по количеству входящих и исходящих дуг
 inline map<pair<int, int>, vector<int>> splitToGroups(const Graph& graph)
 {
 	map<pair<int, int>, vector<int>> groups;
@@ -94,6 +98,23 @@ inline map<pair<int, int>, vector<int>> splitToGroups(const Graph& graph)
 	}
 
 	return groups;
+}
+
+// Сопоставляет переставленные вершины из второго графа к вершинам из первого
+inline bool matchVertices(Graph graph1, Graph graph2, 
+	vector<int> vertices, vector<int> permutation)
+{
+	for (int i = 0; i < permutation.size(); i++)
+	{
+		for (int j = 0; j < permutation.size(); j++)
+		{
+			if (graph1.matrix[vertices[i]][vertices[j]] != graph2.matrix[permutation[i]][permutation[j]])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 inline bool check(const Graph& graph1, const Graph& graph2)
@@ -128,7 +149,33 @@ inline bool check(const Graph& graph1, const Graph& graph2)
 		return false;
 	}
 
+	// Проходим по группам обоих графов одновременно
+	for (auto it1 = groups1.begin(), end1 = groups1.end(), it2 = groups2.begin();
+		it1 != end1; it1++, it2++)
+	{
+		auto vertices1 = it1->second;
+		auto vertices2 = it2->second;
 
+		vector<int> permutation = vertices2;
+
+		bool isomorphicGroup = false;
+		// Перебираем все перестановки вершин в группе второго графа
+		do
+		{
+			// Пытаемся сопоставить вершины из групп, то есть найти изоморфизм
+			if (matchVertices(graph1, graph2, vertices1, permutation))
+			{
+				isomorphicGroup = true;
+			}
+		}
+		while (next_permutation(permutation.begin(), permutation.end()));
+
+		// Если хотя бы в одной группе не найден изоморфизм, то графы не изоморфны
+		if (isomorphicGroup == false)
+		{
+			return false;
+		}
+	}
 
 	return true;
 }
