@@ -127,7 +127,32 @@ inline vector<int**> RandomIsomorphicMatrix(int n)
 		}
 	}
 
-	random_shuffle(m2, m2 + n);
+	int r1, r2;  // r1 - рандомная строка,  r2 - рандомный сдвиг
+	int count = 0; 
+	bool d = true; // для проверки диагонали на нули
+	while (count < n || d) // мешает n-раз и пока диагональ не станет нулевой
+	{
+		d = false;
+		count++;
+
+		r2 = 1 + rand() % 2;
+		r1 = rand() % (n - r2);
+
+		swap(m2[r1], m2[r1 + r2]); // меняем строки
+
+		for (int i = 0; i < n; i++) //меняем столбцы
+		{
+			swap(m2[i][r1], m2[i][r1 + r2]);
+		}
+
+		for (int i = 0; i < n; i++) //проверка диагонали
+		{
+			if (m2[i][i] != 0)
+			{
+				d = true;
+			}
+		}
+	}
 
 	randomIsomMatrix.push_back(m1);
 	randomIsomMatrix.push_back(m2);
@@ -139,6 +164,7 @@ inline vector<int**> RandomIsomorphicMatrix(int n)
 inline int** DistanceMatrix(const Graph& graph)
 {
 	int** distanceMatrix = new int*[graph.n];
+
 	const int noWay = 4000; // задаем бесконечность 
 
 	vector <int> adjacent[1001]; //задаем массив векторов, где i-ый вектор содержит в себе номера вершин в которые можно попасть с i-ой вершины
