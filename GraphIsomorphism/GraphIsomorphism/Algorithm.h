@@ -273,7 +273,7 @@ inline bool matchVertices(const Graph& graph1, const Graph& graph2,
 	return true;
 }
 
-inline bool check(const Graph& graph1, const Graph& graph2)
+inline bool graphIsomorphism(const Graph& graph1, const Graph& graph2)
 {
 	// Равно ли количество вершин
 	if (graph1.n != graph2.n)

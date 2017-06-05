@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <ctime>
 
 #include "Algorithm.h"
 
@@ -21,7 +22,7 @@ inline void stop()
 	exit(0);
 }
 
-inline void loadGraph(Graph &graph, const string &filename)
+inline void loadGraph(Graph& graph, const string& filename)
 {
 	ifstream file(filename);
 
@@ -40,17 +41,27 @@ inline void loadGraph(Graph &graph, const string &filename)
 	file.close();
 }
 
-inline void load(Graph &graph1, Graph &graph2)
+inline void load(Graph& graph1, Graph& graph2)
 {
 	loadGraph(graph1, "graph1.txt");
 	loadGraph(graph2, "graph2.txt");
 }
 
-inline void show(const Graph &graph1, const Graph &graph2)
+inline void show(const Graph& graph1, const Graph& graph2)
 {
 	cout << "First graph:" << endl;
 	print(graph1);
 
 	cout << "Second graph:" << endl;
 	print(graph2);
+}
+
+inline void check(const Graph& graph1, const Graph& graph2)
+{
+	clock_t t1 = clock();
+	bool isomorphic = graphIsomorphism(graph1, graph2);
+	clock_t t2 = clock();
+
+	cout << (isomorphic ? "Isomorphic" : "Not isomorphic") << endl;
+	cout << "Time: " << (double)(t2 - t1) / CLOCKS_PER_SEC << endl;
 }

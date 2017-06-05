@@ -1,7 +1,6 @@
 ﻿#include <map>
 #include <functional>
 #include <iostream>
-#include <ctime>
 
 #include "Commands.h"
 
@@ -17,15 +16,7 @@ int main(void)
 	commands["stop"] = stop;
 	commands["load"] = [&]() { load(graph1, graph2); };
 	commands["show"] = [&]() { show(graph1, graph2); };
-	commands["check"] = [&]()
-	{
-		clock_t t1 = clock();
-		bool isomorphic = check(graph1, graph2);
-		clock_t t2 = clock();
-		
-		cout << (isomorphic ? "isomorphic" : "not isomorphic") << endl;
-		cout << "time: " << (double)(t2 - t1) / CLOCKS_PER_SEC << endl;
-	};
+	commands["check"] = [&]() { check(graph1, graph2); };
 
 	string command;
 	while (true)
