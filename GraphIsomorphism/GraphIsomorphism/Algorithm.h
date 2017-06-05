@@ -55,6 +55,22 @@ inline void print(const Graph& graph)
 	}
 }
 
+inline void printPermutation(const vector<int>& permutation)
+{
+	cout << "Permutation:" << endl;
+	for (int i = 0; i < permutation.size(); i++)
+	{
+		cout << setw(3) << i + 1 << " ";
+	}
+	cout << endl;
+
+	for (int i = 0; i < permutation.size(); i++)
+	{
+		cout << setw(3) << permutation[i] + 1 << " ";
+	}
+	cout << endl;
+}
+
 // Считает количество ребер
 inline int countEdges(const Graph& graph)
 {
@@ -259,8 +275,6 @@ inline bool matchVertices(const Graph& graph1, const Graph& graph2,
 
 inline bool check(const Graph& graph1, const Graph& graph2)
 {
-	//distanceMatrix(graph1);
-
 	// Равно ли количество вершин
 	if (graph1.n != graph2.n)
 	{
@@ -291,6 +305,8 @@ inline bool check(const Graph& graph1, const Graph& graph2)
 		return false;
 	}
 
+	vector<int> permutation(graph1.n);
+
 	// Проходим по группам обоих графов одновременно
 	for (auto it1 = groups1.begin(), end1 = groups1.end(), it2 = groups2.begin();
 		it1 != end1; it1++, it2++)
@@ -298,18 +314,24 @@ inline bool check(const Graph& graph1, const Graph& graph2)
 		auto vertices1 = it1->second;
 		auto vertices2 = it2->second;
 
-		vector<int> permutation = vertices2;
+		vector<int> groupPerm = vertices2;
 
 		bool isomorphicGroup = false;
 		// Перебираем все перестановки вершин в группе второго графа
 		do
 		{
 			// Пытаемся сопоставить вершины из групп, то есть найти изоморфизм
-			if (matchVertices(graph1, graph2, vertices1, permutation))
+			if (matchVertices(graph1, graph2, vertices1, groupPerm))
 			{
 				isomorphicGroup = true;
+
+				for (int i = 0; i < groupPerm.size(); i++)
+				{
+					permutation[vertices2[i]] = groupPerm[i];
+				}
 			}
-		} while (next_permutation(permutation.begin(), permutation.end()));
+		}
+		while (next_permutation(groupPerm.begin(), groupPerm.end()));
 
 		// Если хотя бы в одной группе не найден изоморфизм, то графы не изоморфны
 		if (isomorphicGroup == false)
@@ -318,5 +340,7 @@ inline bool check(const Graph& graph1, const Graph& graph2)
 		}
 	}
 
+	printPermutation(permutation);
+	
 	return true;
 }

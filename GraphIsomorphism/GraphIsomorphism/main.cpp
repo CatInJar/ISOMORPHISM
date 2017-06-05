@@ -23,8 +23,8 @@ int main(void)
 		bool isomorphic = check(graph1, graph2);
 		clock_t t2 = clock();
 		
-		cout << (check(graph1, graph2) ? "isomorphic" : "not isomorphic") << endl;
-		cout << "time: " << (t2 - t1) / CLOCKS_PER_SEC << endl;
+		cout << (isomorphic ? "isomorphic" : "not isomorphic") << endl;
+		cout << "time: " << (double)(t2 - t1) / CLOCKS_PER_SEC << endl;
 	};
 
 	string command;
