@@ -313,6 +313,9 @@ namespace isomorphism
 			}
 			while (next_permutation(groupPerm.begin(), groupPerm.end()));
 
+			clear(groupGraph1);
+			clear(groupGraph2);
+
 			// Если хотя бы в одной группе не найден изоморфизм, то графы не изоморфны
 			if (isomorphicGroup == false)
 			{
