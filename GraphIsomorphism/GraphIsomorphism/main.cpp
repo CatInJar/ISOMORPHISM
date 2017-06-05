@@ -3,8 +3,10 @@
 #include <iostream>
 
 #include "Commands.h"
+#include "Graph.h"
 
 using namespace std;
+using namespace isomorphism;
 
 int main(void)
 {

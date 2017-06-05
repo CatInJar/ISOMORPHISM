@@ -4,9 +4,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Algorithm.h" />
     <ClCompile Include="Commands.h" />
+    <ClCompile Include="Algorithm.cpp" />
+    <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="Commands.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="graph1.txt" />
     <Text Include="graph2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Graph.h" />
   </ItemGroup>
 </Project>
