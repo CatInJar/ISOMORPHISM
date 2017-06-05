@@ -102,7 +102,7 @@ inline map<pair<int, int>, vector<int>> splitToGroups(const Graph& graph)
 	return groups;
 }
 
-inline vector<int**> RandomIsomorphicMatrix(int n)
+inline vector<int**> randomIsomorphicMatrix(int n)
 {
 	vector<int**> randomIsomMatrix; 
 	
@@ -160,23 +160,26 @@ inline vector<int**> RandomIsomorphicMatrix(int n)
 	return randomIsomMatrix;
 }
 
-
-inline int** DistanceMatrix(const Graph& graph)
+inline int** distanceMatrix(const Graph& graph)
 {
 	int** distanceMatrix = new int*[graph.n];
 
 	const int noWay = 4000; // задаем бесконечность 
 
-	vector <int> adjacent[1001]; //задаем массив векторов, где i-ый вектор содержит в себе номера вершин в которые можно попасть с i-ой вершины
-	for (int i = 0; i < graph.n; i++) {
-		for (int j = 0; j < graph.n; j++) {
-			if (graph.matrix[i][j] != 0) {
+    // задаем массив векторов, где i-ый вектор содержит в себе номера вершин в которые можно попасть с i-ой вершины
+	vector<int> adjacent[1001];
+	for (int i = 0; i < graph.n; i++)
+	{
+		for (int j = 0; j < graph.n; j++)
+		{
+			if (graph.matrix[i][j] != 0)
+			{
 				adjacent[i].push_back(j);
 			}
 		}
 	}
 
-	bool *visited = new bool[graph.n];
+	bool* visited = new bool[graph.n];
 	int minimum = noWay;
 	int position;
 
@@ -187,22 +190,27 @@ inline int** DistanceMatrix(const Graph& graph)
 
 		position = 0;
 
-		for (int i = 0; i < graph.n; i++) {
+		for (int i = 0; i < graph.n; i++)
+		{
 			visited[i] = false;
 		}
 
-		for (int i = 0; i < graph.n; i++) {
+		for (int i = 0; i < graph.n; i++)
+		{
 			distanceMatrix[curentVertex][i] = noWay;
 		}
 
 		distanceMatrix[curentVertex][curentVertex] = 0;
 
 		//ищем вершину с наименьшей длиной пути до заданной вершины 
-		for (int i = 0; i < graph.n; i++) { 
+		for (int i = 0; i < graph.n; i++)
+		{ 
 			minimum = noWay;
 			position = 0;
-			for (int j = 0; j < graph.n; j++) {
-				if (distanceMatrix[curentVertex][j] < minimum && !visited[j]) {
+			for (int j = 0; j < graph.n; j++)
+			{
+				if (distanceMatrix[curentVertex][j] < minimum && !visited[j])
+				{
 					minimum = distanceMatrix[curentVertex][j];
 					position = j;
 				}
@@ -210,16 +218,20 @@ inline int** DistanceMatrix(const Graph& graph)
 			visited[position] = true; 
 
 			// применяем алгоритм Дейкстры 
-			for (int i = 0; i < adjacent[position].size(); i++) { 
-				distanceMatrix[curentVertex][adjacent[position][i]] = min(distanceMatrix[curentVertex][adjacent[position][i]], (distanceMatrix[curentVertex][position] + 1));
+			for (int i = 0; i < adjacent[position].size(); i++)
+			{ 
+				distanceMatrix[curentVertex][adjacent[position][i]] = 
+					min(distanceMatrix[curentVertex][adjacent[position][i]], (distanceMatrix[curentVertex][position] + 1));
 			}
 		}		
 	}
 
 	//тестовый вывод таблицы, замена значения noWay c 4000 на -1    <<<<<<<<<<<<<<<<<<<<<<<<<
 	cout << endl << "distance matrix"<< endl;
-	for (int i = 0; i < graph.n; i++) {
-		for (int j = 0; j < graph.n; j++) {
+	for (int i = 0; i < graph.n; i++)
+	{
+		for (int j = 0; j < graph.n; j++)
+		{
 			cout << setw(3)<< ((distanceMatrix[i][j] == noWay) ? distanceMatrix[i][j] = -1 : distanceMatrix[i][j]) << " ";
 		}
 		cout << endl;
@@ -227,8 +239,6 @@ inline int** DistanceMatrix(const Graph& graph)
 
 	return distanceMatrix;
 }
-
-
 
 // Сопоставляет переставленные вершины из второго графа к вершинам из первого
 inline bool matchVertices(const Graph& graph1, const Graph& graph2, 
@@ -249,7 +259,7 @@ inline bool matchVertices(const Graph& graph1, const Graph& graph2,
 
 inline bool check(const Graph& graph1, const Graph& graph2)
 {
-	DistanceMatrix(graph1);
+	//distanceMatrix(graph1);
 
 	// Равно ли количество вершин
 	if (graph1.n != graph2.n)
@@ -310,5 +320,3 @@ inline bool check(const Graph& graph1, const Graph& graph2)
 
 	return true;
 }
-
-

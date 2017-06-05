@@ -7,13 +7,6 @@
 
 using namespace std;
 
-/*
-TODO:
-1. Алгоритм.
-2. Обработка ошибок.
-3. Комменты.
-*/
-
 int main(void)
 {
 	Graph graph1, graph2;
@@ -24,7 +17,15 @@ int main(void)
 	commands["stop"] = stop;
 	commands["load"] = [&]() { load(graph1, graph2); };
 	commands["show"] = [&]() { show(graph1, graph2); };
-	commands["check"] = [&]() { cout << (check(graph1, graph2) ? "isomorphic" : "not isomorphic") << endl; };
+	commands["check"] = [&]()
+	{
+		clock_t t1 = clock();
+		bool isomorphic = check(graph1, graph2);
+		clock_t t2 = clock();
+		
+		cout << (check(graph1, graph2) ? "isomorphic" : "not isomorphic") << endl;
+		cout << "time: " << (t2 - t1) / CLOCKS_PER_SEC << endl;
+	};
 
 	string command;
 	while (true)
@@ -33,13 +34,7 @@ int main(void)
 		
 		if (commands.find(command) != commands.end())
 		{
-			clock_t t1 = clock();
 			commands[command]();
-			clock_t t2 = clock();
-			if (command == "check")
-			{
-				cout <<"time: "<< (t2 - t1 + .0) / CLOCKS_PER_SEC << endl;
-			}
 		}
 		else
 		{
@@ -47,5 +42,9 @@ int main(void)
 		}
 		cout << "........................." << endl;
 	}
+
+	clear(graph1);
+	clear(graph2);
+
 	return 0;
 }
