@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Isomorphism", "..\Isomorphism\Isomorphism.vcxproj", "{6743E43A-9A32-41A0-BE7C-E4EF16B5245C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Isomorphism", "Isomorphism\Isomorphism.vcxproj", "{6743E43A-9A32-41A0-BE7C-E4EF16B5245C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
