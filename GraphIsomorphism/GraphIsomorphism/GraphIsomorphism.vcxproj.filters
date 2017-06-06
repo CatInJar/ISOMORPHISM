@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Algorithm.h" />
-    <ClCompile Include="Commands.h" />
     <ClCompile Include="Algorithm.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Commands.cpp" />
+    <ClCompile Include="Algorithm.h" />
+    <ClCompile Include="Commands.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="graph1.txt" />

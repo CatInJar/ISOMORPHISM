@@ -92,7 +92,7 @@ namespace isomorphism
 
 		const int noWay = 4000; // задаем бесконечность 
 
-		// задаем массив векторов, где i-ый вектор содержит в себе номера вершин в которые можно попасть с i-ой вершины
+								// задаем массив векторов, где i-ый вектор содержит в себе номера вершин в которые можно попасть с i-ой вершины
 		vector<int> adjacent[1001];
 		for (int i = 0; i < graph.n; i++)
 		{
@@ -310,7 +310,7 @@ namespace isomorphism
 
 					for (int i = 0; i < groupPerm.size(); i++)
 					{
-						permutation[vertices2[i]] = groupMatch[groupPerm[i]];
+						permutation[vertices1[i]] = groupMatch[groupPerm[i]];
 					}
 
 					break;
@@ -330,6 +330,7 @@ namespace isomorphism
 
 		printPermutation(permutation);
 
+		// Just testing
 		print(graph1);
 		cout << endl;
 		for (int i = 0; i < graph2.n; i++)

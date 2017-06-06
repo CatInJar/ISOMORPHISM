@@ -1,4 +1,4 @@
-﻿#include <map>
+#include <map>
 #include <functional>
 #include <iostream>
 
@@ -12,7 +12,7 @@ int main(void)
 	Graph graph1, graph2;
 
 	map<string, function<void()>> commands;
-	
+
 	commands["help"] = help;
 	commands["stop"] = stop;
 	commands["load"] = [&]() { load(graph1, graph2); };
@@ -23,7 +23,7 @@ int main(void)
 	while (true)
 	{
 		cin >> command;
-		
+
 		if (commands.find(command) != commands.end())
 		{
 			commands[command]();
