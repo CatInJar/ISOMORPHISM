@@ -12,6 +12,7 @@ using namespace std;
 
 namespace isomorphism
 {
+	// Выводит некоторую перестановку
 	void printPermutation(const vector<int>& permutation)
 	{
 		cout << "Permutation:" << endl;
@@ -247,6 +248,7 @@ namespace isomorphism
 		return true;
 	}
 
+	// Проверяет графы на изоморфизм и выводит перестановку, если такая существует
 	bool graphIsomorphism(const Graph& graph1, const Graph& graph2)
 	{
 		// Равно ли количество вершин
@@ -279,7 +281,7 @@ namespace isomorphism
 			return false;
 		}
 
-		vector<int> permutation(graph1.n);
+		vector<int> permutation(graph1.n); // Будущая итоговая перестановка второго графа
 
 		// Проходим по группам обоих графов одновременно
 		for (auto it1 = groups1.begin(), end1 = groups1.end(), it2 = groups2.begin();
@@ -288,11 +290,12 @@ namespace isomorphism
 			auto vertices1 = it1->second;
 			auto vertices2 = it2->second;
 
+			// Генерация матриц для групп
 			Graph groupGraph1 = createGroupGraph(graph1, vertices1);
 			Graph groupGraph2 = createGroupGraph(graph2, vertices2);
 
-			vector<int> groupPerm(vertices2.size());
-			map<int, int> groupMatch;
+			vector<int> groupPerm(vertices2.size()); // Перестановка группы второго графа
+			map<int, int> groupMatch; // Запоминаем номера вершин, чтобы записать их в итоговую перестановку
 			for (int i = 0; i < vertices2.size(); i++)
 			{
 				groupPerm[i] = i;
