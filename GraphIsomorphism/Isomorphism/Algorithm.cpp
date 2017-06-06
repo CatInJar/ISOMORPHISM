@@ -29,72 +29,16 @@ namespace isomorphism
 		cout << endl;
 	}
 
-	vector<int**> randomIsomorphicMatrix(int n)
+	//нахождение диаметра графа
+	int graphDiameter(const Graph& graph)
 	{
-		vector<int**> randomIsomMatrix;
-
-		int** m1 = new int*[n];
-		int** m2 = new int*[n];
-
-		for (int i = 0; i < n; i++)
-		{
-			m1[i] = new int[n];
-			m2[i] = new int[n];
-		}
-
-		for (int i = 0; i < n; i++)
-		{
-			for (int j = 0; j < n; j++)
-			{
-				m1[i][j] = m2[i][j] = rand() % 2;
-				if (i == j)
-				{
-					m1[i][j] = m2[i][j] = 0;
-				}
-			}
-		}
-
-		int r1, r2;  // r1 - рандомная строка,  r2 - рандомный сдвиг
-		int count = 0;
-		bool d = true; // для проверки диагонали на нули
-		while (count < n || d) // мешает n-раз и пока диагональ не станет нулевой
-		{
-			d = false;
-			count++;
-
-			r2 = 1 + rand() % 2;
-			r1 = rand() % (n - r2);
-
-			swap(m2[r1], m2[r1 + r2]); // меняем строки
-
-			for (int i = 0; i < n; i++) //меняем столбцы
-			{
-				swap(m2[i][r1], m2[i][r1 + r2]);
-			}
-
-			for (int i = 0; i < n; i++) //проверка диагонали
-			{
-				if (m2[i][i] != 0)
-				{
-					d = true;
-				}
-			}
-		}
-
-		randomIsomMatrix.push_back(m1);
-		randomIsomMatrix.push_back(m2);
-
-		return randomIsomMatrix;
-	}
-
-	int** distanceMatrix(const Graph& graph)
-	{
-		int** distanceMatrix = new int*[graph.n];
+		int diameter = 0;
+		int* distance = new int[graph.n];
 
 		const int noWay = 4000; // задаем бесконечность 
 
-								// задаем массив векторов, где i-ый вектор содержит в себе номера вершин в которые можно попасть с i-ой вершины
-		vector<int> adjacent[1001];
+		// задаем массив векторов, где i-ый вектор содержит в себе номера вершин в которые можно попасть с i-ой вершины
+		vector<int>* adjacent = new vector<int>[graph.n];
 		for (int i = 0; i < graph.n; i++)
 		{
 			for (int j = 0; j < graph.n; j++)
@@ -113,8 +57,6 @@ namespace isomorphism
 		//для каждой вершины ищём растояния до других вершин
 		for (int curentVertex = 0; curentVertex < graph.n; curentVertex++)
 		{
-			distanceMatrix[curentVertex] = new int[graph.n];
-
 			position = 0;
 
 			for (int i = 0; i < graph.n; i++)
@@ -124,10 +66,10 @@ namespace isomorphism
 
 			for (int i = 0; i < graph.n; i++)
 			{
-				distanceMatrix[curentVertex][i] = noWay;
+				distance[i] = noWay;
 			}
 
-			distanceMatrix[curentVertex][curentVertex] = 0;
+			distance[curentVertex] = 0;
 
 			//ищем вершину с наименьшей длиной пути до заданной вершины 
 			for (int i = 0; i < graph.n; i++)
@@ -136,9 +78,9 @@ namespace isomorphism
 				position = 0;
 				for (int j = 0; j < graph.n; j++)
 				{
-					if (distanceMatrix[curentVertex][j] < minimum && !visited[j])
+					if (distance[j] < minimum && !visited[j])
 					{
-						minimum = distanceMatrix[curentVertex][j];
+						minimum = distance[j];
 						position = j;
 					}
 				}
@@ -147,24 +89,25 @@ namespace isomorphism
 				// применяем алгоритм Дейкстры 
 				for (int i = 0; i < adjacent[position].size(); i++)
 				{
-					distanceMatrix[curentVertex][adjacent[position][i]] =
-						min(distanceMatrix[curentVertex][adjacent[position][i]], (distanceMatrix[curentVertex][position] + 1));
+					distance[adjacent[position][i]] =
+						min(distance[adjacent[position][i]], (distance[position] + 1));
+				}
+			}
+
+			for (int i = 0; i < graph.n; i++)
+			{
+				if (distance[i] > diameter && distance[i] != noWay)
+				{
+					diameter = distance[i];
 				}
 			}
 		}
 
-		//тестовый вывод таблицы, замена значения noWay c 4000 на -1    <<<<<<<<<<<<<<<<<<<<<<<<<
-		cout << endl << "distance matrix" << endl;
-		for (int i = 0; i < graph.n; i++)
-		{
-			for (int j = 0; j < graph.n; j++)
-			{
-				cout << setw(3) << ((distanceMatrix[i][j] == noWay) ? distanceMatrix[i][j] = -1 : distanceMatrix[i][j]) << " ";
-			}
-			cout << endl;
-		}
+		delete[] distance;
+		delete[] adjacent;
+		delete[] visited;
 
-		return distanceMatrix;
+		return diameter;
 	}
 
 	// Считает количество ребер
@@ -259,6 +202,12 @@ namespace isomorphism
 
 		// Равно ли количество дуг
 		if (countEdges(graph1) != countEdges(graph2))
+		{
+			return false;
+		}
+
+		// Равны ли диаметры
+		if (graphDiameter(graph1) != graphDiameter(graph2))
 		{
 			return false;
 		}
