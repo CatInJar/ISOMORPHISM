@@ -31,12 +31,7 @@ int main(void)
 	commands["show"] = [&]() { show(graph1, graph2); };
 	commands["check"] = [&]() { check(graph1, graph2); };
 
-	vector<string> vc;
-
-	string buffer;
-
 	string command;
-	string parameter;
 	while (true)
 	{
 		cin >> command;
