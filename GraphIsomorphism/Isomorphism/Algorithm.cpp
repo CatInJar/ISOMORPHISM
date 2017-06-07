@@ -33,12 +33,11 @@ namespace isomorphism
 	int graphDiameter(const Graph& graph)
 	{
 		int diameter = 0;
-		int* distance = new int[graph.n];
 
-		const int noWay = 4000; // «адаем бесконечность 
+		const int noWay = numeric_limits<int>::max(); // «адаем бесконечность 
 
 		// «адаем массив векторов, где i-ый вектор содержит в себе номера вершин в которые можно попасть с i-ой вершины
-		vector<int>* adjacent = new vector<int>[graph.n];
+		vector<vector<int>> adjacent(graph.n);
 		for (int i = 0; i < graph.n; i++)
 		{
 			for (int j = 0; j < graph.n; j++)
@@ -50,7 +49,9 @@ namespace isomorphism
 			}
 		}
 
-		bool* visited = new bool[graph.n];
+		vector<int> distance(graph.n);
+		vector<bool> visited(graph.n);
+		
 		int minimum = noWay;
 		int position;
 
@@ -102,9 +103,6 @@ namespace isomorphism
 				}
 			}
 		}
-
-		delete[] distance;
-		delete[] visited;
 
 		return diameter;
 	}

@@ -50,6 +50,7 @@ int main(void)
 			cout << "Unknown command: " << command << endl;
 		}
 		cout << "........................." << endl;
+		cin.clear();
 	}
 
 	clear(graph1);
