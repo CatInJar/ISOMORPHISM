@@ -15,6 +15,7 @@ namespace isomorphism
 	{
 		cout << " stop - exit from program" << endl;
 		cout << " load - load graphs from file" << endl;
+		cout << " rig {0} - make random isomorphic graphs, {0} - size" << endl;
 		cout << " show - print graphs" << endl;
 		cout << " check - check if graphs are isomorphic and show possible permutation" << endl;
 	}
@@ -22,6 +23,16 @@ namespace isomorphism
 	void stop()
 	{
 		exit(0);
+	}
+
+	//создание рандомных изоморфных графов заданной размерности
+	void rig(Graph& graph1, Graph& graph2, int n)
+	{
+		graph1.n = graph2.n = n;
+		init(graph1);
+		init(graph2);
+
+		createRIGs(graph1, graph2);
 	}
 
 	void loadGraph(Graph& graph, const string& filename)

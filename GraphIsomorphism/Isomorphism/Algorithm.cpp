@@ -104,7 +104,6 @@ namespace isomorphism
 		}
 
 		delete[] distance;
-		delete[] adjacent;
 		delete[] visited;
 
 		return diameter;
@@ -283,16 +282,42 @@ namespace isomorphism
 		printPermutation(permutation);
 
 		// Just testing
-		print(graph1);
-		cout << endl;
-		for (int i = 0; i < graph2.n; i++)
+		if (graph1.n < 51)
 		{
-			for (int j = 0; j < graph2.n; j++)
-			{
-				cout << graph2.matrix[permutation[i]][permutation[j]] << " ";
-			}
+			print(graph1);
 			cout << endl;
+			for (int i = 0; i < graph2.n; i++)
+			{
+				for (int j = 0; j < graph2.n; j++)
+				{
+					cout << graph2.matrix[permutation[i]][permutation[j]] << " ";
+				}
+				cout << endl;
+			}
 		}
+
+		cout << "groups" << endl;
+		for each (auto item in groups1)
+		{
+			cout << endl;
+			cout << "< " << item.first.first << "_;_" << item.first.second << " >   ";
+			for each (auto vert in item.second)
+			{
+				cout << vert<<" ";
+			}
+		}
+		cout << endl;
+
+		for each (auto item in groups2)
+		{
+			cout << endl;
+			cout << "< " << item.first.first << "_;_" << item.first.second << " >   ";
+			for each (auto vert in item.second)
+			{
+				cout << vert << " ";
+			}
+		}
+		cout << endl;
 
 		return true;
 	}

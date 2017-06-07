@@ -10,5 +10,6 @@ namespace isomorphism
 
 	void clear(Graph& graph);
 	void init(Graph& graph);
+	void createRIGs(Graph& graph1, Graph& graph2);
 	void print(const Graph& graph);
 }
