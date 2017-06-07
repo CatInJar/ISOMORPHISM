@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <algorithm>
+#include <vector>
+#include <numeric>
 
 using namespace std;
 
@@ -28,36 +30,6 @@ namespace isomorphism
 		}
 	}
 
-	// заполнение рандомных изоморфных графов
-	void createRIGs(Graph& graph1, Graph& graph2)
-	{
-		int n = graph1.n;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				graph1.matrix[i][j] = graph2.matrix[i][j] = rand() % 2; //рандомно заполныем 0 и 1
-				if (i == j) {
-					graph1.matrix[i][j] = graph2.matrix[i][j] = 0;
-					if (i != 0) {
-						graph1.matrix[i - 1][j] = graph2.matrix[i - 1][j] = 1; //делаем граф связным
-					}
-				}
-			}
-		}
-
-		int* permutation = new int[n];
-		for (int i = 0; i < n; i++) {
-			permutation[i] = i;
-		}
-		random_shuffle(permutation, permutation + n);
-
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				graph2.matrix[i][j] = graph1.matrix[permutation[i]][permutation[j]];
-			}
-		}
-		delete[] permutation;
-	}
-
 	void print(const Graph& graph)
 	{
 		if (graph.n == 0)
@@ -75,6 +47,40 @@ namespace isomorphism
 				cout << graph.matrix[i][j] << " ";
 			}
 			cout << endl;
+		}
+	}
+
+	// Заполнение рандомных изоморфных графов
+	void createRIGs(Graph& graph1, Graph& graph2)
+	{
+		int n = graph1.n;
+
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++)
+			{
+				graph1.matrix[i][j] = rand() % 2; // Рандомно заполняем 0 и 1
+				if (i == j)
+				{
+					graph1.matrix[i][j] = 0;
+					if (i != 0)
+					{
+						graph1.matrix[i - 1][j] = 1; // Делаем граф связным
+					}
+				}
+			}
+		}
+
+		vector<int> permutation(n);
+		iota(permutation.begin(), permutation.end(), 0);
+		random_shuffle(permutation.begin(), permutation.end());
+
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++)
+			{
+				graph2.matrix[i][j] = graph1.matrix[permutation[i]][permutation[j]];
+			}
 		}
 	}
 }
