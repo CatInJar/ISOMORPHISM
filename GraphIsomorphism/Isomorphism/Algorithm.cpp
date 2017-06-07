@@ -29,15 +29,15 @@ namespace isomorphism
 		cout << endl;
 	}
 
-	//нахождение диаметра графа
+	// Ќахождение диаметра графа
 	int graphDiameter(const Graph& graph)
 	{
 		int diameter = 0;
 		int* distance = new int[graph.n];
 
-		const int noWay = 4000; // задаем бесконечность 
+		const int noWay = 4000; // «адаем бесконечность 
 
-		// задаем массив векторов, где i-ый вектор содержит в себе номера вершин в которые можно попасть с i-ой вершины
+		// «адаем массив векторов, где i-ый вектор содержит в себе номера вершин в которые можно попасть с i-ой вершины
 		vector<int>* adjacent = new vector<int>[graph.n];
 		for (int i = 0; i < graph.n; i++)
 		{
@@ -54,7 +54,7 @@ namespace isomorphism
 		int minimum = noWay;
 		int position;
 
-		//дл€ каждой вершины ищЄм расто€ни€ до других вершин
+		// ƒл€ каждой вершины ищЄм расто€ни€ до других вершин
 		for (int curentVertex = 0; curentVertex < graph.n; curentVertex++)
 		{
 			position = 0;
@@ -71,7 +71,7 @@ namespace isomorphism
 
 			distance[curentVertex] = 0;
 
-			//ищем вершину с наименьшей длиной пути до заданной вершины 
+			// »щем вершину с наименьшей длиной пути до заданной вершины 
 			for (int i = 0; i < graph.n; i++)
 			{
 				minimum = noWay;
@@ -86,7 +86,7 @@ namespace isomorphism
 				}
 				visited[position] = true;
 
-				// примен€ем алгоритм ƒейкстры 
+				// ѕримен€ем алгоритм ƒейкстры 
 				for (int i = 0; i < adjacent[position].size(); i++)
 				{
 					distance[adjacent[position][i]] =
